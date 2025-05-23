@@ -1,18 +1,26 @@
 from process import Process
 from fcfs import FCFS
 from sjf import SJF
+from fifo import FIFO
+from lru import LRU
 import copy
 import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Generowanie danych testowych
-random.seed(44)
-num_processes = 10000
+# Generowanie danych testowych dla FCFS i SJF
+random.seed(42)
+num_processes = 10
 test_data = [
     Process(pid=i+1, arrival_time=random.randint(0, 10), burst_time=random.randint(1, 8))
     for i in range(num_processes)
 ]
+
+# Generowanie danych testowych dla FIFO i LRU
+random.seed(123)
+num_frames = 3
+reference_length = 30
+reference_string = [random.randint(0, 9) for _ in range(reference_length)]
 
 # Kopia danych do FCFS i SJF
 fcfs_processes = copy.deepcopy(test_data)
@@ -32,7 +40,20 @@ sjf_stats = sjf.get_stats()
 print("FCFS Stats:", fcfs_stats)
 print("SJF Stats:", sjf_stats)
 
-# Wykres słupkowy
+# FIFO
+fifo = FIFO(num_frames)
+fifo_faults = fifo.run(reference_string)
+fifo_stats = fifo.get_stats()
+
+# LRU
+lru = LRU(num_frames)
+lru_faults = lru.run(reference_string)
+lru_stats = lru.get_stats()
+
+print("FIFO page faults:", fifo_faults)
+print("LRU page faults:", lru_faults)
+
+# Wykres słupkowy dla FCFS i SJF
 labels = ['Avg Waiting', 'Avg Turnaround', 'Avg Response']
 fcfs_values = [
     fcfs_stats['avg_waiting_time'],
@@ -62,6 +83,26 @@ for rect in rects1 + rects2:
     height = rect.get_height()
     ax.annotate(f'{height:.2f}',
                 xy=(rect.get_x() + rect.get_width() / 2, height),
+                xytext=(0, 3),
+                textcoords="offset points",
+                ha='center', va='bottom')
+
+plt.tight_layout()
+plt.show()
+
+# Wykres słupkowy dla FIFO i LRU
+alg_labels = ['FIFO', 'LRU']
+faults = [fifo_faults, lru_faults]
+
+fig, ax = plt.subplots()
+bars = ax.bar(alg_labels, faults, color=['tab:blue', 'tab:orange'])
+ax.set_ylabel('Page Faults')
+ax.set_title('Page Faults: FIFO vs LRU')
+
+for bar in bars:
+    height = bar.get_height()
+    ax.annotate(f'{height}',
+                xy=(bar.get_x() + bar.get_width() / 2, height),
                 xytext=(0, 3),
                 textcoords="offset points",
                 ha='center', va='bottom')

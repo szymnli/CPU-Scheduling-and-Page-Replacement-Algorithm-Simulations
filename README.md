@@ -32,18 +32,33 @@ test_data = [
 ```
 ### Wyniki
 1. 10 procesów, ziarno 42 <br>
-![10 procesów](img/fcfs_sjf_10.png)
+![10 procesów](img/fcfs_sjf_10.png) <br>
 SJF jest wyraźnie lepszy, średni czas oczekiwania oraz turnaround są znacząco niższe niż w FCFS. Czas oczekiwania jest równy czasowi odpowiedzi, ponieważ w obu algorytmach procesy czekają na swoją kolej bez przerw.
 2. 100 procesów, ziarno 43 <br>
-![100 procesów](img/fcfs_sjf_100.png)
+![100 procesów](img/fcfs_sjf_100.png) <br>
 SJF nadal przeważa chociaż różnice stają się mniej dramatyczne.
 3. 10000 procesów, ziarno 44 <br>
-![10000 procesów](img/fcfs_sjf_10000.png)
+![10000 procesów](img/fcfs_sjf_10000.png) <br>
 FCFS dalej widocznie gorzej sobie radzi niż SJF ale różnice ciągle maleją.
 ### Wnioski
 SJF jest optymalny dla małej, średniej oraz dużej liczby procesów przy zróżnicowanych czasach wykonania. FCFS jest prostszym algorytmem ale nawet przy małym obciążeniu ma problemy z wydajnością ze względu na "efekt konwoju", blokowanie kolejki jednym długim procesem do momentu jego zakończenia.
 ## Symulacje algorytmów zastępowania stron
+Do przeprowadzenia symulacji zostały wybrane algorytmy FIFO oraz LRU. Wybrano te metody ze względu na ich fundamentalne różnice w zarządzaniu pamięcią.
 ### FIFO (First In, First Out)
-...
+Algorytm FIFO jest najprostszym algorytmem zastępowania stron. Jego działanie polega na trzymaniu wszystkich stron w kolejce, najstarsza znajduje się na początku. Kiedy wszystkie ramki są zajęte, FIFO usuwa pierwszą w kolejce.
+#### Zalety
+- Prostota implementacji
+- Niskie wymagania obliczeniowe
+- Przewidywalność, zawsze zostanie usunięta najstarsza strona
+#### Wady
+- Nie bierze pod uwagę użycia stron, może usuwać te które są nadal potrzebne
 ### LRU (Least Recently Used)
-...
+LRU to algorytm który usuwa z pamięci stronę która jest od najdłuższego czasu nieużywana. Jest oparty o założenie, że strony używane dawniej są mniej potrzebne niż te, który były używane później.
+#### Zalety
+- Ogranicza ryzyko usunięcia potrzebnych stron
+- Minimalizuje błędy strony, lepiej wykorzystuje lokalność czasową
+#### Wady
+- Trudniejsza implementacja od FIFO
+- Rzadko używane, ale kluczowe strony mogą być usuwane
+### Dane testowe
+
