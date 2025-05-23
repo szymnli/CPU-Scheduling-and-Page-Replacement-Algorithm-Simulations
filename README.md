@@ -31,10 +31,10 @@ test_data = [
 ]
 ```
 ### Wyniki
-1. 10 procesów, ziarno 42
+1. 10 procesów, ziarno 42\n
 ![10 procesów](img/fcfs_sjf_10.png)
 SJF jest wyraźnie lepszy, średni czas oczekiwania oraz turnaround są znacząco niższe niż w FCFS. Czas oczekiwania jest równy czasowi odpowiedzi, ponieważ w obu algorytmach procesy czekają na swoją kolej bez przerw.
-2. 100 procesów, ziarno 43
+2. 100 procesów, ziarno 43\n
 ![100 procesów](img/fcfs_sjf_100.png)
 SJF nadal przeważa chociaż różnice stają się mniej dramatyczne.
 3. 10000 procesów, ziarno 44
