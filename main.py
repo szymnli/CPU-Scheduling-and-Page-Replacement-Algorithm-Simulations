@@ -80,8 +80,8 @@ seed_labels = []
 # Generowanie danych testowych oraz uruchamianie algorytmów FIFO i LRU 
 for seed in range(num_seeds):
     random.seed(seed)
-    #reference_string = [random.randint(0, 9) for _ in range(reference_length)]
-    reference_string = [1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6]
+    reference_string = [random.randint(0, 9) for _ in range(reference_length)]
+    # reference_string = [1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6]
     fifo = FIFO(num_frames)
     lru = LRU(num_frames)
     fifo_faults = fifo.run(reference_string)

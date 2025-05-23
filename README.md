@@ -1,5 +1,5 @@
-# Sprawozdanie
-...
+# Wprowadzenie do systemów komputerowych
+Program symulacyjny dla planowania czasu procesora oraz zastępowania stron
 ## Symulacje algorytmów planowania czasu procesora
 Do przeprowadzenia symulacji zostały wybrane algorytmy FCFS oraz SJF, ze względu na ich wyraźne różnice w działaniu, a także prostotę implementacji, która umożliwia klarowne porównanie wyników. Symulacje zostały wykonane w języku Python, do porównania oraz wizualizacji wyników zostały wykorzystane biblioteki matplotlib oraz numpy. 
 ### FCFS (First-Come, First-Served)
