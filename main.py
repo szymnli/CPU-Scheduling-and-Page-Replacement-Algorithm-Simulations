@@ -16,12 +16,6 @@ test_data = [
     for i in range(num_processes)
 ]
 
-# Generowanie danych testowych dla FIFO i LRU
-random.seed(123)
-num_frames = 3
-reference_length = 30
-reference_string = [random.randint(0, 9) for _ in range(reference_length)]
-
 # Kopia danych do FCFS i SJF
 fcfs_processes = copy.deepcopy(test_data)
 sjf_processes = copy.deepcopy(test_data)
@@ -36,22 +30,6 @@ sjf = SJF(sjf_processes)
 sjf.run()
 sjf_stats = sjf.get_stats()
 
-# Statystyki
-print("FCFS Stats:", fcfs_stats)
-print("SJF Stats:", sjf_stats)
-
-# FIFO
-fifo = FIFO(num_frames)
-fifo_faults = fifo.run(reference_string)
-fifo_stats = fifo.get_stats()
-
-# LRU
-lru = LRU(num_frames)
-lru_faults = lru.run(reference_string)
-lru_stats = lru.get_stats()
-
-print("FIFO page faults:", fifo_faults)
-print("LRU page faults:", lru_faults)
 
 # Wykres słupkowy dla FCFS i SJF
 labels = ['Avg Waiting', 'Avg Turnaround', 'Avg Response']
@@ -90,19 +68,45 @@ for rect in rects1 + rects2:
 plt.tight_layout()
 plt.show()
 
-# Wykres słupkowy dla FIFO i LRU
-alg_labels = ['FIFO', 'LRU']
-faults = [fifo_faults, lru_faults]
+# Parametry dane do FIFO i LRU
+num_seeds = 10
+num_frames = 3
+reference_length = 30
 
-fig, ax = plt.subplots()
-bars = ax.bar(alg_labels, faults, color=['tab:blue', 'tab:orange'])
+fifo_faults_list = []
+lru_faults_list = []
+seed_labels = []
+
+# Generowanie danych testowych oraz uruchamianie algorytmów FIFO i LRU 
+for seed in range(num_seeds):
+    random.seed(seed)
+    reference_string = [random.randint(0, 9) for _ in range(reference_length)]
+    fifo = FIFO(num_frames)
+    lru = LRU(num_frames)
+    fifo_faults = fifo.run(reference_string)
+    lru_faults = lru.run(reference_string)
+    fifo_faults_list.append(fifo_faults)
+    lru_faults_list.append(lru_faults)
+    seed_labels.append(f"Seed {seed}")
+
+# Wykres słupkowy dla FIFO i LRU
+x = np.arange(num_seeds)
+width = 0.35
+
+fig, ax = plt.subplots(figsize=(12, 6))
+rects1 = ax.bar(x - width/2, fifo_faults_list, width, label='FIFO', color='tab:pink')
+rects2 = ax.bar(x + width/2, lru_faults_list, width, label='LRU', color='tab:blue')
+
 ax.set_ylabel('Page Faults')
 ax.set_title('Page Faults: FIFO vs LRU')
+ax.set_xticks(x)
+ax.set_xticklabels(seed_labels, rotation=45)
+ax.legend()
 
-for bar in bars:
-    height = bar.get_height()
+for rect in rects1 + rects2:
+    height = rect.get_height()
     ax.annotate(f'{height}',
-                xy=(bar.get_x() + bar.get_width() / 2, height),
+                xy=(rect.get_x() + rect.get_width() / 2, height),
                 xytext=(0, 3),
                 textcoords="offset points",
                 ha='center', va='bottom')

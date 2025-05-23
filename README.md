@@ -61,4 +61,17 @@ LRU to algorytm który usuwa z pamięci stronę która jest od najdłuższego cz
 - Trudniejsza implementacja od FIFO
 - Rzadko używane, ale kluczowe strony mogą być usuwane
 ### Dane testowe
-
+Dane testowe składają się z losowo wygenerowanych ciągów numerów stron o zmiennych parametrach aby można było porównać ze sobą algorytmu w różnych scenariuszach. Num_seeds odpowiada za ilość ziaren do porównania, num_frames określa ile stron może być jednocześnie w pamięci, a reference_length wyznacza długość wygenerowanych ciągów liczbowych.
+```
+num_seeds = 10
+num_frames = 3
+reference_length = 30
+...
+for seed in range(num_seeds):
+    random.seed(seed)
+    reference_string = [random.randint(0, 9) for _ in range(reference_length)]
+    ...
+```
+### Wyniki
+1. Liczba ramek: 3, długość ciągów: 30, liczba stron: 10 <br>
+![Pierwsze porównanie](img/fifo_lru_1.png) <br>

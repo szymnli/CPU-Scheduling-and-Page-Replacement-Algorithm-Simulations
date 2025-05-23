@@ -22,8 +22,3 @@ class FIFO:
                     self.frames.append(page)
                     queue.append(page)
         return self.page_faults
-
-    def get_stats(self):
-        return {
-            "page_faults": self.page_faults
-        }
