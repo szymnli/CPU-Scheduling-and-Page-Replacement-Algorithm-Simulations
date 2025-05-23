@@ -76,7 +76,11 @@ for seed in range(num_seeds):
 1. Liczba ramek: 3, długość ciągów: 30, liczba stron: 10, ziarno: 0-9 <br>
 ![Pierwsze porównanie](img/fifo_lru_1.png) <br>
 2. Liczba ramek: 5, długość ciągów: 100, liczba stron: 20, ziarno: 0-9 <br>
-![Pierwsze porównanie](img/fifo_lru_2.png) <br>
+![Drugie porównanie](img/fifo_lru_2.png) <br>
 3. Liczba ramek: 10, długość ciągów: 500, liczba stron: 50, ziarno: 0-9 <br>
-![Pierwsze porównanie](img/fifo_lru_3.png) <br>
+![Trzecie porównanie](img/fifo_lru_3.png) <br>
+4. Liczba ramek: 3, konkretny ciąg w kórym widoczny jest trend najczęściej używanej strony <br>
+![Czwarte porównanie](img/fifo_lru_4.png) <br>
+### Wnioski
+Na podstawie przeprowadzonych symulacji można zauważyć, że w przypadku losowo generowanych ciągów odwołań do stron, algorytmy FIFO i LRU osiągają bardzo zbliżone wyniki, FIFO wypada minimalnie lepiej. Wynika to najprawdopodobniej z losowości danych testowych. Jednak w sytuacji kiedy dane nie są losowe i wyraźnie występuje najczęściej używana strona, algorytm LRU pokazuje swoją przewagę.
 

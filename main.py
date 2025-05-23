@@ -69,9 +69,9 @@ plt.tight_layout()
 plt.show()
 
 # Parametry dane do FIFO i LRU
-num_seeds = 10
-num_frames = 10
-reference_length = 500
+num_seeds = 1
+num_frames = 3
+reference_length = 10
 
 fifo_faults_list = []
 lru_faults_list = []
@@ -80,7 +80,8 @@ seed_labels = []
 # Generowanie danych testowych oraz uruchamianie algorytmów FIFO i LRU 
 for seed in range(num_seeds):
     random.seed(seed)
-    reference_string = [random.randint(0, 49) for _ in range(reference_length)]
+    #reference_string = [random.randint(0, 9) for _ in range(reference_length)]
+    reference_string = [1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6]
     fifo = FIFO(num_frames)
     lru = LRU(num_frames)
     fifo_faults = fifo.run(reference_string)
