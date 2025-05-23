@@ -73,5 +73,10 @@ for seed in range(num_seeds):
     ...
 ```
 ### Wyniki
-1. Liczba ramek: 3, długość ciągów: 30, liczba stron: 10 <br>
+1. Liczba ramek: 3, długość ciągów: 30, liczba stron: 10, ziarno: 0-9 <br>
 ![Pierwsze porównanie](img/fifo_lru_1.png) <br>
+2. Liczba ramek: 5, długość ciągów: 100, liczba stron: 20, ziarno: 0-9 <br>
+![Pierwsze porównanie](img/fifo_lru_2.png) <br>
+3. Liczba ramek: 10, długość ciągów: 500, liczba stron: 50, ziarno: 0-9 <br>
+![Pierwsze porównanie](img/fifo_lru_3.png) <br>
+
