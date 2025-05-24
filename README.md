@@ -44,7 +44,8 @@ test_data = [
 Dla małej, średniej jak i dużej ilości procesów, przy zróżnicowanych czasach wykonania, algorytm SJF jest wyraźnie lepszy. Średni czas oczekiwania (waiting), odpowiedzi (response) oraz cyklu przetwarzania (turnaround) są znacząco niższe niż w FCFS. Czas oczekiwania jest równy czasowi odpowiedzi, ponieważ w obu algorytmach procesy czekają na swoją kolej bez przerw. 
 - Dla małej liczby procesów (10), SJF zapewnia średnio o 38,4% krótszy czas oczekiwania i odpowiedzi, oraz o 29,9% krótszy turnaround w porównaniu do FCFS. To największa różnica spośród wszystkich testowanych przypadków.
 - Przy 100 procesach, różnice nieco się zmniejszają, ale nadal są znaczące: średnio 36,6% krótszy czas oczekiwania i odpowiedzi, oraz 35,9% krótszy turnaround.
-- Dla dużej liczby procesów (10 000), SJF nadal wypada lepiej, oferując 29,4% krótszy czas oczekiwania, odpowiedzi i turnaround w porównaniu do FCFS. <br>
+- Dla dużej liczby procesów (10 000), SJF nadal wypada lepiej, oferując 29,4% krótszy czas oczekiwania, odpowiedzi i turnaround w porównaniu do FCFS.  
+
 FCFS, mimo swojej prostoty, okazuje się mało efektywny w praktyce. Efekt konwoju powoduje, że krótsze procesy muszą niepotrzebnie czekać na zakończenie dłuższych, co znacznie pogarsza wydajność, zwłaszcza przy małej liczbie zadań. Wraz ze wzrostem liczby procesów efektywność FCFS nieco się poprawia, jednak nadal pozostaje mniej efektywny od SJF.
 ## Symulacje algorytmów zastępowania stron
 Stronicowanie pamięci w systemach operacyjnych to sposób zarządzania pamięcią, w którym komputer zapisuje i pobiera dane z pamięci dodatkowej do wykorzystania w pamięci podstawowej. System operacyjny przenosi dane w postaci ustandaryzowanych bloków (stron) o stałym rozmiarze, co umożliwia efektywną organizację przestrzeni adresowej. <br><br>
