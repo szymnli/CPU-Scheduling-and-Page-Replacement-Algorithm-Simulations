@@ -7,6 +7,7 @@ import copy
 import random
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 
 # Generowanie danych testowych dla FCFS i SJF
 random.seed(42)
@@ -68,10 +69,25 @@ for rect in rects1 + rects2:
 plt.tight_layout()
 plt.show()
 
+# Zapis wyników FCFS i SJF do pliku CSV
+with open("results/fcfs_sjf_results_1.csv", "w", newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow([
+        "PID", "ArrivalTime", "BurstTime",
+        "FCFS_Start", "FCFS_Completion", "FCFS_Waiting", "FCFS_Turnaround", "FCFS_Response",
+        "SJF_Start", "SJF_Completion", "SJF_Waiting", "SJF_Turnaround", "SJF_Response"
+    ])
+    for fcfs_proc, sjf_proc in zip(fcfs.processes, sjf.processes):
+        writer.writerow([
+            fcfs_proc.pid, fcfs_proc.arrival_time, fcfs_proc.burst_time,
+            fcfs_proc.start_time, fcfs_proc.completion_time, fcfs_proc.waiting_time, fcfs_proc.turnaround_time, fcfs_proc.response_time,
+            sjf_proc.start_time, sjf_proc.completion_time, sjf_proc.waiting_time, sjf_proc.turnaround_time, sjf_proc.response_time
+        ])
+
 # Parametry dane do FIFO i LRU
-num_seeds = 1
+num_seeds = 10
 num_frames = 3
-reference_length = 10
+reference_length = 30
 
 fifo_faults_list = []
 lru_faults_list = []
@@ -114,3 +130,10 @@ for rect in rects1 + rects2:
 
 plt.tight_layout()
 plt.show()
+
+# Zapis wyników FIFO i LRU do pliku CSV
+with open("results/fifo_lru_results_1.csv", "w", newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(["Seed", "FIFO_PageFaults", "LRU_PageFaults"])
+    for seed, fifo_faults, lru_faults in zip(seed_labels, fifo_faults_list, lru_faults_list):
+        writer.writerow([seed, fifo_faults, lru_faults])
