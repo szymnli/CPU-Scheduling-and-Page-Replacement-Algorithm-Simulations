@@ -1,5 +1,6 @@
 from process import Process
 
+
 class SJF:
     def __init__(self, processes):
         self.processes = processes
@@ -12,7 +13,11 @@ class SJF:
         processes = self.processes[:]
         while completed < n:
             # Znajdowanie procesów, które przybyły i nie zostały jeszcze zakończone
-            available = [p for i, p in enumerate(processes) if p.arrival_time <= current_time and not is_completed[i]]
+            available = [
+                p
+                for i, p in enumerate(processes)
+                if p.arrival_time <= current_time and not is_completed[i]
+            ]
             if available:
                 # Wybieranie procesu o najkrótszym czasie przybycia
                 shortest = min(available, key=lambda p: p.burst_time)
@@ -35,5 +40,5 @@ class SJF:
         return {
             "avg_waiting_time": avg_waiting,
             "avg_turnaround_time": avg_turnaround,
-            "avg_response_time": avg_response
+            "avg_response_time": avg_response,
         }

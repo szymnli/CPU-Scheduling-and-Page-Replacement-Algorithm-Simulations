@@ -1,5 +1,6 @@
 from process import Process
 
+
 class FCFS:
     def __init__(self, processes):
         # Sortowanie procesów według czasu przybycia
@@ -24,5 +25,5 @@ class FCFS:
         return {
             "avg_waiting_time": avg_waiting,
             "avg_turnaround_time": avg_turnaround,
-            "avg_response_time": avg_response
+            "avg_response_time": avg_response,
         }
