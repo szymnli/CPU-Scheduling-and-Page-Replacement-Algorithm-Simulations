@@ -1,31 +1,42 @@
-# Symulacje algorytmów planowania procesora i zastępowania stron
-## Wstęp
-Celem tego sprawozdania jest analiza i porównanie wybranych algorytmów planowania czasu procesora oraz zastępowania stron w pamięci operacyjnej. Do symulacji zostały wybrane algorytmy FCFS i SJF oraz FIFO i LRU. Implementacja algorytmów została wykonana w języku Python, a wizualizacja za pomocą biblioteki matplotlib.
-## Symulacje algorytmów planowania czasu procesora
-Kiedy proces w pamięci operacyjnej przechodzi w stan oczekiwania, system operacyjny odbiera mu zasoby procesora i przekazuje do dyspozycji innego procesu. Planowanie przydziału procesora jest jedną z fundamentalnych funkcji każdego systemu operacyjnego.<br><br>
-Główne cele algorytmów planowania to między innymi minimalizacja czasu oczekiwania i wykonania procesów oraz utrzymanie równowagi między wydajnością a responsywnością systemu. W praktyce implementowane są różne algorytmy planowania, każdy z charakterystycznymi zaletami oraz ograniczeniami, dostosowane do konkretnych wymagań systemowych. <br><br>
-Do przeprowadzenia symulacji zostały wybrane algorytmy FCFS oraz SJF, ze względu na ich wyraźne różnice w działaniu, a także prostotę implementacji, która umożliwia porównanie wyników w przejrzysty sposób.
+# CPU Scheduling and Page Replacement Algorithm Simulations
+
+## Introduction
+The goal of this report is to analyze and compare selected CPU scheduling and page replacement algorithms. The algorithms chosen for simulation are FCFS and SJF for CPU scheduling, and FIFO and LRU for page replacement. The algorithms were implemented in Python, with visualizations generated using the matplotlib library.
+
+## CPU Scheduling Algorithm Simulations
+When a process in memory enters a waiting state, the operating system reclaims CPU resources and assigns them to another process. CPU scheduling is one of the fundamental functions of any operating system.
+
+The main goals of scheduling algorithms include minimizing process waiting and execution times, and maintaining a balance between system performance and responsiveness. In practice, various scheduling algorithms are implemented, each with distinct advantages and limitations, tailored to specific system requirements.
+
+FCFS and SJF were selected for simulation due to their clear operational differences and straightforward implementation, which allows for a transparent comparison of results.
+
 ### FCFS (First-Come, First-Served)
-FCFS to najprostszy algorytm planowania procesora, który wykonuje procesy od początku do końca w takiej kolejności, w jakiej się pojawiły. FCFS jest strategią bez wywłaszczania (przerywania trwającego procesu).
-#### Zalety
-- Można oszacować czas oczekiwania na podstawie kolejki
-- Procesy nie są głodzone (każdy zostanie obsłużony)
-- Łatwa implementacja oraz zrozumienie
-#### Wady
-- Możliwy długi czas oczekiwania dla krótkich procesów
-- Słaba średnia wydajność 
-- Brak priorytetów
+FCFS is the simplest CPU scheduling algorithm, which executes processes from start to finish in the order they arrive. FCFS is a non-preemptive strategy (it does not interrupt a running process).
+
+#### Advantages
+- Waiting time can be estimated based on the queue
+- No process starvation (every process will eventually be served)
+- Simple to implement and understand
+
+#### Disadvantages
+- Potentially long waiting times for short processes
+- Poor average performance
+- No priority support
+
 ### SJF (Shortest Job First)
-Algorytm SJF to metoda planowania procesów bez wywłaszczania, która optymalizuje wykorzystanie procesora poprzez priorytetowe wykonywanie zadań o najkrótszym czasie wykonania. Jego celem jest minimalizacja średniego czasu przetwarzania zadania.
-#### Zalety
-- Minimalizacja średniego czasu oczekiwania
-- Zwiększa przepustowość systemu (częściej wykonuje krótkie zadania, zwiększając liczbę ukończonych procesów)
-#### Wady
-- Może prowadzić do głodzenia długich procesów
-- Skompliwany proces przewidywania czasu wykonania
-### Dane testowe
-Symulacje zostały wykonane na trzech losowo wygenerowanych zbiorach danych o różnej wielkości. Poniższy kod generuje listę procesów, która jest następnie wykorzystywana jako dane wejściowe dla obu algorytmów. Num_processes określa liczbę procesów do wygenerowania, burst_time oraz arrival_time są losowo wybieranymi wartościami odpowiednio czasu trwania procesu i czasu jego przybycia.
-```
+SJF is a non-preemptive process scheduling method that optimizes CPU utilization by prioritizing tasks with the shortest execution time. Its goal is to minimize the average task processing time.
+
+#### Advantages
+- Minimizes average waiting time
+- Increases system throughput (executes more short tasks, increasing the number of completed processes)
+
+#### Disadvantages
+- Can lead to starvation of long processes
+- Predicting execution time is complex
+
+### Test Data
+Simulations were run on three randomly generated datasets of varying sizes. The code below generates a list of processes used as input for both algorithms. `num_processes` defines the number of processes to generate; `burst_time` and `arrival_time` are randomly selected values representing process duration and arrival time respectively.
+```python
 random.seed(42)
 num_processes = 10
 test_data = [
@@ -33,43 +44,56 @@ test_data = [
     for i in range(num_processes)
 ]
 ```
-### Wyniki
-1. 10 procesów, ziarno 42 <br>
-![10 procesów](img/fcfs_sjf_10.png)
-2. 100 procesów, ziarno 43 <br>
-![100 procesów](img/fcfs_sjf_100.png)
-3. 10000 procesów, ziarno 44 <br>
-![10000 procesów](img/fcfs_sjf_10000.png)
-### Wnioski
-Dla małej, średniej jak i dużej ilości procesów, przy zróżnicowanych czasach wykonania, algorytm SJF jest wyraźnie lepszy. Średni czas oczekiwania (waiting), odpowiedzi (response) oraz cyklu przetwarzania (turnaround) są znacząco niższe niż w FCFS. Czas oczekiwania jest równy czasowi odpowiedzi, ponieważ w obu algorytmach procesy czekają na swoją kolej bez przerw. 
-- Dla małej liczby procesów (10), SJF zapewnia średnio o 38,4% krótszy czas oczekiwania i odpowiedzi, oraz o 29,9% krótszy turnaround w porównaniu do FCFS. To największa różnica spośród wszystkich testowanych przypadków.
-- Przy 100 procesach, różnice nieco się zmniejszają, ale nadal są znaczące: średnio 36,6% krótszy czas oczekiwania i odpowiedzi, oraz 35,9% krótszy turnaround.
-- Dla dużej liczby procesów (10 000), SJF nadal wypada lepiej, oferując 29,4% krótszy czas oczekiwania, odpowiedzi i turnaround w porównaniu do FCFS.  
 
-FCFS, mimo swojej prostoty, okazuje się mało efektywny w praktyce. Efekt konwoju powoduje, że krótsze procesy muszą niepotrzebnie czekać na zakończenie dłuższych, co znacznie pogarsza wydajność, zwłaszcza przy małej liczbie zadań. Wraz ze wzrostem liczby procesów efektywność FCFS nieco się poprawia, jednak nadal pozostaje mniej efektywny od SJF.
-## Symulacje algorytmów zastępowania stron
-Stronicowanie pamięci w systemach operacyjnych to sposób zarządzania pamięcią, w którym komputer zapisuje i pobiera dane z pamięci dodatkowej do wykorzystania w pamięci podstawowej. System operacyjny przenosi dane w postaci ustandaryzowanych bloków (stron) o stałym rozmiarze, co umożliwia efektywną organizację przestrzeni adresowej. <br><br>
-Założenie, że tylko część stron każdego procesu jest potrzebna w pamięci może doprowadzić do nadprzydziału, czyli nadmiaru procesów w pamięci i całkowitego braku wolnych ramek. Aby nie blokować procesu wymagającego kolejnej ramki, stosuje się zastępowanie stron. <br><br>
-Do przeprowadzenia symulacji zostały wybrane algorytmy FIFO oraz LRU. Wybrano te metody ze względu na ich fundamentalne różnice w zarządzaniu pamięcią.
+### Results
+1. 10 processes, seed 42
+![10 processes](img/fcfs_sjf_10.png)
+2. 100 processes, seed 43
+![100 processes](img/fcfs_sjf_100.png)
+3. 10,000 processes, seed 44
+![10,000 processes](img/fcfs_sjf_10000.png)
+
+### Conclusions
+For small, medium, and large process counts with varied execution times, SJF clearly outperforms FCFS. Average waiting time, response time, and turnaround time are significantly lower than in FCFS. Waiting time equals response time in both algorithms, since processes wait their turn without interruption.
+
+- For a small number of processes (10), SJF provides on average 38.4% shorter waiting and response times, and 29.9% shorter turnaround compared to FCFS — the largest difference across all tested cases.
+- With 100 processes, the differences narrow slightly but remain significant: on average 36.6% shorter waiting and response times, and 35.9% shorter turnaround.
+- For a large number of processes (10,000), SJF still performs better, offering 29.4% shorter waiting, response, and turnaround times compared to FCFS.
+
+FCFS, despite its simplicity, proves inefficient in practice. The convoy effect forces shorter processes to wait unnecessarily for longer ones to finish, significantly degrading performance — especially with a small number of tasks. As the number of processes increases, FCFS efficiency improves slightly, but it remains less effective than SJF.
+
+## Page Replacement Algorithm Simulations
+Memory paging in operating systems is a memory management approach in which the computer stores and retrieves data from secondary storage for use in primary memory. The operating system moves data in standardized fixed-size blocks (pages), enabling efficient organization of the address space.
+
+The assumption that only a subset of each process's pages needs to be in memory can lead to over-allocation — too many processes in memory and no free frames remaining. To avoid blocking a process that requires another frame, page replacement is used.
+
+FIFO and LRU were selected for simulation due to their fundamental differences in memory management.
+
 ### FIFO (First In, First Out)
-Algorytm FIFO jest najprostszym algorytmem zastępowania stron. Jego działanie polega na trzymaniu wszystkich stron w kolejce, a najstarsza znajduje się na początku. Kiedy wszystkie ramki są zajęte, FIFO usuwa pierwszą w kolejce.
-#### Zalety
-- Prostota implementacji
-- Niskie wymagania obliczeniowe
-- Przewidywalność (zawsze zostanie usunięta najstarsza strona)
-#### Wady
-- Nie bierze pod uwagę użycia stron (może usuwać te które są nadal potrzebne)
+FIFO is the simplest page replacement algorithm. It maintains all pages in a queue, with the oldest page at the front. When all frames are occupied, FIFO evicts the first page in the queue.
+
+#### Advantages
+- Simple to implement
+- Low computational overhead
+- Predictable behavior (the oldest page is always evicted)
+
+#### Disadvantages
+- Does not account for page usage frequency (may evict pages that are still needed)
+
 ### LRU (Least Recently Used)
-LRU to algorytm, który usuwa z pamięci stronę, która jest od najdłuższego czasu nieużywana. Jest oparty o założenie, że strony używane dawniej są mniej potrzebne niż te, który były używane później.
-#### Zalety
-- Ogranicza ryzyko usunięcia potrzebnych stron
-- Minimalizuje błędy strony (lepiej wykorzystuje lokalność czasową)
-#### Wady
-- Trudniejsza implementacja od FIFO
-- Rzadko używane, ale kluczowe strony mogą być usuwane
-### Dane testowe
-Dane testowe składają się z losowo wygenerowanych ciągów numerów stron o zmiennych parametrach, tak aby można było porównać ze sobą działania algorytmów w różnych scenariuszach. Num_seeds odpowiada za ilość ziaren do porównania, num_frames określa, ile stron może być jednocześnie w pamięci, a reference_length wyznacza długość wygenerowanych ciągów liczbowych. Do jednej z symulacji użyto również statycznego ciągu numerów stron z widocznie najczęściej używaną stroną.
-```
+LRU is an algorithm that evicts the page that has not been used for the longest period of time. It is based on the assumption that pages used furthest in the past are less likely to be needed than recently used ones.
+
+#### Advantages
+- Reduces the risk of evicting needed pages
+- Minimizes page faults (better exploits temporal locality)
+
+#### Disadvantages
+- More complex to implement than FIFO
+- Rarely used but critical pages may still be evicted
+
+### Test Data
+Test data consists of randomly generated page reference strings with varying parameters, enabling comparison of algorithm behavior across different scenarios. `num_seeds` defines the number of seeds to compare, `num_frames` specifies how many pages can reside in memory simultaneously, and `reference_length` sets the length of generated reference strings. One simulation also uses a static page reference string with a clearly dominant frequently-used page.
+```python
 num_seeds = 10
 num_frames = 3
 reference_length = 30
@@ -79,20 +103,25 @@ for seed in range(num_seeds):
     reference_string = [random.randint(0, 9) for _ in range(reference_length)]
     # reference_string = [1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6]
 ```
-### Wyniki
-1. Liczba ramek: 3, długość ciągów: 30, liczba stron: 10, ziarno: 0-9 <br>
-![Pierwsze porównanie](img/fifo_lru_1.png) <br>
-2. Liczba ramek: 5, długość ciągów: 100, liczba stron: 20, ziarno: 0-9 <br>
-![Drugie porównanie](img/fifo_lru_2.png) <br>
-3. Liczba ramek: 10, długość ciągów: 500, liczba stron: 50, ziarno: 0-9 <br>
-![Trzecie porównanie](img/fifo_lru_3.png) <br>
-4. Liczba ramek: 3, konkretny ciąg w kórym widoczny jest trend najczęściej używanej strony <br>
-![Czwarte porównanie](img/fifo_lru_4.png) <br>
-### Wnioski
-Na podstawie przeprowadzonych symulacji można zauważyć, że w przypadku losowo generowanych ciągów odwołań do stron, algorytmy FIFO i LRU osiągają bardzo zbliżone wyniki, FIFO wypada minimalnie lepiej, co może być wynikiem losowości danych testowych. <br><br>
-W przypadku danych o wyraźnych wzorcach lokalności, czyli gdy pewne strony są używane częściej i w krótkich odstępach czasu, FIFO znacząco przewyższa LRU pod względem liczby błędów stron. Wynika to z faktu, że FIFO działa wyłącznie na zasadzie kolejności wczytania stron do pamięci i nie bierze pod uwagę ich ponownego użycia. W konsekwencji może usuwać często używane strony, co prowadzi do większej liczby błędów strony. <br><br>
-Algorytm LRU osiąga lepsze wyniki w środowiskach charakteryzujących się lokalnością czasową, ponieważ jego strategia polega na usuwaniu stron najdłużej niewykorzystywanych, co pozwala utrzymać w pamięci strony o największym prawdopodobieństwie ponownego użycia. To czyni go bardziej efektywnym, zwłaszcza w warunkach, które odzwierciedlają realistyczne scenariusze pracy systemu operacyjnego.
-## Źródła
+
+### Results
+1. Frames: 3, string length: 30, page count: 10, seeds: 0–9
+![First comparison](img/fifo_lru_1.png)
+2. Frames: 5, string length: 100, page count: 20, seeds: 0–9
+![Second comparison](img/fifo_lru_2.png)
+3. Frames: 10, string length: 500, page count: 50, seeds: 0–9
+![Third comparison](img/fifo_lru_3.png)
+4. Frames: 3, static string with a visible frequently-used page trend
+![Fourth comparison](img/fifo_lru_4.png)
+
+### Conclusions
+Based on the simulations, for randomly generated page reference strings, FIFO and LRU produce very similar results — FIFO performs marginally better, likely as a result of the random nature of the test data.
+
+For data with clear locality patterns — where certain pages are accessed frequently and in short intervals — LRU significantly outperforms FIFO in terms of page fault count. This is because FIFO operates purely on the order in which pages were loaded into memory, ignoring how often they are reused. As a result, it may evict frequently accessed pages, leading to a higher page fault rate.
+
+LRU achieves better results in environments characterized by temporal locality, since its strategy of evicting the least recently used page keeps the most likely-to-be-reused pages in memory. This makes it more effective, especially in conditions that reflect realistic operating system workloads.
+
+## Sources
 - Dr inż. Marek Wilkus, [Systemy operacyjne Wykład 04](https://home.agh.edu.pl/~mwilkus/os/2024_W04_ITc.pdf)
 - Dr inż. Marek Wilkus, [Systemy operacyjne Wykład 03N](https://home.agh.edu.pl/~mwilkus/os/2024_W03N_ITc.pdf)
 - prof. dr hab. inż. Jerzy Brzeziński, dr inż. Dariusz Wawrzyniak, [Planowanie przydziału procesora](https://www.cs.put.poznan.pl/dwawrzyniak/SysOp2017/szereg1_1s.pdf)
