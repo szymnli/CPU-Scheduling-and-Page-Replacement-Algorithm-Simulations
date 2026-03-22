@@ -3,13 +3,13 @@ from process import Process
 
 class FCFS:
     def __init__(self, processes):
-        # Sortowanie procesów według czasu przybycia
+        # Sort processes by arrival time
         self.processes = sorted(processes, key=lambda p: p.arrival_time)
 
     def run(self):
         current_time = 0
         for process in self.processes:
-            # Zmiana czasu przybycia jeśli CPU czeka na proces
+            # Change arrival time if CPU waits for the process
             if current_time < process.arrival_time:
                 current_time = process.arrival_time
             process.start_time = current_time

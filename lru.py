@@ -15,7 +15,7 @@ class LRU:
                 if len(self.frames) < self.num_frames:
                     self.frames.append(page)
                 else:
-                    # Usunięcie najdawniej używanej strony
+                    # Remove the least recently used page
                     lru_page = recently_used.pop(0)
                     self.frames.remove(lru_page)
                     self.frames.append(page)

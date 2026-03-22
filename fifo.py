@@ -16,7 +16,7 @@ class FIFO:
                     self.frames.append(page)
                     queue.append(page)
                 else:
-                    # Usuwanie najstarszej strony
+                    # Remove the oldest page and add the new one
                     oldest = queue.pop(0)
                     self.frames.remove(oldest)
                     self.frames.append(page)

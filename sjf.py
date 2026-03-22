@@ -12,14 +12,14 @@ class SJF:
         is_completed = [False] * n
         processes = self.processes[:]
         while completed < n:
-            # Znajdowanie procesów, które przybyły i nie zostały jeszcze zakończone
+            # Find all processes that have arrived and are not yet completed
             available = [
                 p
                 for i, p in enumerate(processes)
                 if p.arrival_time <= current_time and not is_completed[i]
             ]
             if available:
-                # Wybieranie procesu o najkrótszym czasie przybycia
+                # Select the process with the shortest burst time
                 shortest = min(available, key=lambda p: p.burst_time)
                 idx = processes.index(shortest)
                 shortest.start_time = current_time
@@ -29,7 +29,7 @@ class SJF:
                 is_completed[idx] = True
                 completed += 1
             else:
-                # Przesunięcie czasu, jeśli nie ma dostępnych procesów
+                # Advance time if no process is currently available
                 current_time += 1
 
     def get_stats(self):
